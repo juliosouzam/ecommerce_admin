@@ -35,7 +35,7 @@ type Props = PopoverTriggerProps & {
 
 export function StoreSwitcher({ className, items = [] }: Props) {
   const storeModal = useStoreModal();
-  const params = useParams();
+  const params = useParams<{ storeId: string }>();
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
