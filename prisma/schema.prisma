@@ -9,11 +9,25 @@ datasource db {
 }
 
 model Store {
+  id         String      @id @default(uuid())
+  name       String
+  userId     String      @map("user_id")
+  billboards Billboard[] @relation("store_billboards")
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+
+  @@map("stores")
+}
+
+model Billboard {
   id        String   @id @default(uuid())
-  name      String
-  userId    String   @map("user_id")
+  storeId   String   @map("store_id")
+  store     Store    @relation("store_billboards", fields: [storeId], references: [id])
+  label     String
+  imageUrl  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("stores")
+  @@map("billboards")
+  @@index([storeId])
 }

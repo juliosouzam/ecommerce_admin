@@ -16,11 +16,11 @@ type Props = {
 const textMap: Record<Props['variant'], string> = {
   admin: 'Admin',
   public: 'Public',
-};
+} as const;
 
 const variantMap: Record<Props['variant'], BadgeProps['variant']> = {
-  admin: 'secondary',
-  public: 'destructive',
+  admin: 'destructive',
+  public: 'secondary',
 } as const;
 
 export function ApiAlert({ title, description, variant = 'public' }: Props) {

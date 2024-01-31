@@ -56,9 +56,11 @@ export function StoreSwitcher({ className, items = [] }: Props) {
     [router],
   );
 
+  // return null;
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button
           variant="outline"
           size="sm"
