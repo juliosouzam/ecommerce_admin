@@ -13,6 +13,7 @@ model Store {
   name       String
   userId     String      @map("user_id")
   billboards Billboard[] @relation("store_billboards")
+  categories Category[]  @relation("store_categories")
   createdAt  DateTime    @default(now()) @map("created_at")
   updatedAt  DateTime    @updatedAt @map("updated_at")
 
@@ -20,14 +21,30 @@ model Store {
 }
 
 model Billboard {
-  id        String   @id @default(uuid())
-  storeId   String   @map("store_id")
-  store     Store    @relation("store_billboards", fields: [storeId], references: [id])
-  label     String
-  imageUrl  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id         String     @id @default(uuid())
+  storeId    String     @map("store_id")
+  store      Store      @relation("store_billboards", fields: [storeId], references: [id])
+  categories Category[] @relation("billboard_categories")
+  label      String
+  imageUrl   String
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
 
-  @@map("billboards")
   @@index([storeId])
+  @@map("billboards")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  storeId     String    @map("store_id")
+  store       Store     @relation("store_categories", fields: [storeId], references: [id])
+  billboardId String    @map("billboard_id")
+  billboard   Billboard @relation("billboard_categories", fields: [billboardId], references: [id])
+  name        String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([storeId])
+  @@index([billboardId])
+  @@map("categories")
 }
