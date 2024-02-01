@@ -28,6 +28,7 @@ export function ImageUpload({
     setIsMounted(true);
   }, []);
 
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const onUpload = (result: any) => {
     onChange(result.info.secure_url);
   };
