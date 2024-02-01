@@ -39,6 +39,16 @@ export function RouteNav({
       active: pathname.includes(`/${params.storeId}/colors`),
     },
     {
+      href: `/${params.storeId}/products`,
+      label: 'Products',
+      active: pathname.includes(`/${params.storeId}/products`),
+    },
+    {
+      href: `/${params.storeId}/orders`,
+      label: 'Orders',
+      active: pathname.includes(`/${params.storeId}/orders`),
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: 'Settings',
       active: pathname === `/${params.storeId}/settings`,
