@@ -49,21 +49,12 @@ export async function GET(
   { params }: { params: { storeId: string } },
 ) {
   try {
-    const { userId } = auth();
-    if (!userId) return new NextResponse('Unauthenticated', { status: 401 });
     if (!params.storeId)
       return new NextResponse('Store ID is required', { status: 400 });
-    const store = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    });
-    if (!store) return new NextResponse('Unauthorized', { status: 401 });
 
     const sizes = await prismadb.size.findMany({
       where: {
-        storeId: store.id,
+        storeId: params.storeId,
       },
     });
 

@@ -10,22 +10,13 @@ export async function GET(
   { params }: { params: { storeId: string; billboardId: string } },
 ) {
   try {
-    const { userId } = auth();
-    if (!userId) return new NextResponse('Unauthorized', { status: 401 });
     if (!params.storeId)
       return new NextResponse('Store Id is required', { status: 400 });
     if (!params.billboardId)
       return new NextResponse('Billboard Id is required', { status: 400 });
-    const storeByUserId = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    });
-    if (!storeByUserId)
-      return new NextResponse('Unauthorized', { status: 401 });
+
     const billboard = await prismadb.billboard.findUnique({
-      where: { id: params.billboardId, storeId: storeByUserId.id },
+      where: { id: params.billboardId, storeId: params.storeId },
     });
 
     return NextResponse.json(billboard);

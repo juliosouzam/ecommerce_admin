@@ -75,8 +75,6 @@ export async function GET(
   { params }: { params: { storeId: string } },
 ) {
   try {
-    const { userId } = auth();
-    if (!userId) return new NextResponse('Unauthenticated', { status: 401 });
     if (!params.storeId)
       return new NextResponse('Store ID is required', { status: 400 });
     const { searchParams } = new URL(request.url);
@@ -85,17 +83,9 @@ export async function GET(
     const sizeId = searchParams.get('sizeId') || undefined;
     const isFeatured = searchParams.get('isFeatured');
 
-    const store = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    });
-    if (!store) return new NextResponse('Unauthorized', { status: 401 });
-
     const products = await prismadb.product.findMany({
       where: {
-        storeId: store.id,
+        storeId: params.storeId,
         categoryId,
         colorId,
         sizeId,
