@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "pnpm dlx @biomejs/biome check --apply ./src"
+    "lint": "pnpm dlx @biomejs/biome check --apply ./src",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
